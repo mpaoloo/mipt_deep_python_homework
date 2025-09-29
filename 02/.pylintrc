@@ -1,0 +1,13 @@
+[MASTER]
+extension-pkg-allow-list=[]
+
+
+
+
+[MESSAGES CONTROL]
+disable=missing-docstring, too-few-public-methods
+
+[FORMAT]
+max-line-length=79
+
+[TYPING]
