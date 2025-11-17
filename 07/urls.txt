@@ -1,0 +1,5 @@
+https://google.com
+https://github.com
+https://python.org
+https://stackoverflow.com
+https://httpbin.org/get

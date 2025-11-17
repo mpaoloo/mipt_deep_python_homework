@@ -1,0 +1,41 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov flake8 pylint
+    
+    - name: Run flake8
+      run: |
+        flake8 fetcher.py test_fetcher.py --max-line-length=100
+    
+    - name: Run pylint
+      run: |
+        pylint fetcher.py test_fetcher.py --disable=C0114,C0115,C0116,R0903,W0613
+    
+    - name: Run tests with coverage
+      run: |
+        python -m pytest test_fetcher.py -v --cov=fetcher --cov-report=xml --cov-report=html
+    
+    - name: Check coverage
+      run: |
+        python -m pytest test_fetcher.py --cov=fetcher --cov-report=term-missing --cov-fail-under=90
